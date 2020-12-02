@@ -47,7 +47,17 @@ GetData("https://backtest-result.vercel.app/BTCUSDT_ResultBacketest_D1_3_9.xls",
 
 	function(data){
 
-	var ok =data.DocumentElement.table;
+	var btc =data.DocumentElement.table;
+
+	}
+
+);
+
+GetData("https://backtest-result.vercel.app/ETHUSDT_ResultBacketest_D1_3_9.xls",
+
+	function(data){
+
+	var eth =data.DocumentElement.table;
 
 	}
 
