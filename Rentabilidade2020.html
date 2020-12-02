@@ -49,6 +49,8 @@ var btc=null;
 var eth=null;
 var dates =null;
 
+
+
 GetData("https://backtest-result.vercel.app/BTCUSDT_ResultBacketest_D1_3_9.xls",
 
 	function(data){
@@ -71,6 +73,8 @@ GetData("https://backtest-result.vercel.app/ETHUSDT_ResultBacketest_D1_3_9.xls",
 	}
 
 );
+
+
 
 	
 var dom = document.getElementById("container");
@@ -138,26 +142,22 @@ option = {
 	   name: 'BTC',
 	   lineStyle: {
 		normal: {
-			width: 2,
-			color: '#FFC000'
+			width: 2
 			}
          },
-   
-		[$(btc).map(function() {return Number(this.ProfitJurosComposto);}).get()],
-        type: 'line'
+   			data:$(btc).map(function() {return Number(this.ProfitJurosComposto);}).get(),
+			type: 'line'
 		},
 		{
-	    name: 'ETH',
+	   name: 'ETH',
 	   lineStyle: {
 		normal: {
-			width: 2,
-			color: '#FFC000'
+			width: 2
 			}
          },
-   
-		[$(eth).map(function() {return Number(this.ProfitJurosComposto);}).get()],
-        type: 'line'
-	  }
+   			data:$(eth).map(function() {return Number(this.ProfitJurosComposto);}).get(),
+			type: 'line'
+		}
 	]
 };
 ;
