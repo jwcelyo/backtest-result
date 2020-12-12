@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@1/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@1/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/extension/bmap.min.js"></script>
+	   
+	          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	   	   <script>var exports = {"__esModule": true};</script>
+	   <script src="https://cdn.jsdelivr.net/npm/@hendt/xml2json@1.0.3/lib/index.min.js"></script>
+
+
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var upColor = '#ec0000';
+var upBorderColor = '#8A0000';
+var downColor = '#00da3c';
+var downBorderColor = '#008F28';
+
+var GetData = function(url,result)
+{
+
+$.ajax({
+    url : url,
+    type : "get",
+    async: false,
+    success : function(data) {
+
+		result( xml2json(data));
+		
+    },
+    error: function() {
+    
+    }
+ });
+ 
+
+}
+var getColor = function(v)
+{
+	if	(v=='Gain')
+	{
+	return  downColor;
+	}
+return upColor;
+}
+
+
+
+var btc=null;
+var eth=null;
+var dates =null;
+var candles = [];
+var proffit = [];
+
+GetData("https://backtest-result.vercel.app/BTCUSDT_ResultBacketest_H12_5_9.xls",
+
+	function(data){
+
+	 btc =data.DocumentElement.table;
+
+	
+	dates=	$(btc).map(function() {return this.DataOperacao;}).get();
+
+	 btc.forEach(function(valor, chave){
+       candles.push([valor.DataOperacao, Number(valor.Open),Number(valor.Close),Number(valor.Low),Number(valor.High)]);
+	   
+	     proffit.push( {
+                        name:valor.DataOperacao,
+                        coord: [valor.DataOperacao,Number(valor.Close)],
+                        value:valor.Profit,
+                        itemStyle: {
+                            color: getColor(valor.Profit)
+                        }
+                    } );
+	 });
+	
+	}
+
+);
+
+
+// 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
+var data0 = splitData(candles);
+
+
+function splitData(rawData) {
+    var categoryData = [];
+    var values = []
+    for (var i = 0; i < rawData.length; i++) {
+        categoryData.push(rawData[i].splice(0, 1)[0]);
+        values.push(rawData[i])
+    }
+    return {
+        categoryData: categoryData,
+        values: values
+    };
+}
+
+function calculateMA(dayCount) {
+    var result = [];
+    for (var i = 0, len = data0.values.length; i < len; i++) {
+        if (i < dayCount) {
+            result.push('-');
+            continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < dayCount; j++) {
+            sum += data0.values[i - j][1];
+        }
+        result.push(sum / dayCount);
+    }
+    return result;
+}
+
+
+
+option = {
+    title: {
+        text: '上证指数',
+        left: 0
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    legend: {
+        data: ['Chart', 'MA5', 'MA10', 'MA20', 'MA30']
+    },
+    grid: {
+        left: '10%',
+        right: '10%',
+        bottom: '15%'
+    },
+    xAxis: {
+        type: 'category',
+        data: data0.categoryData,
+        scale: true,
+        boundaryGap: false,
+        axisLine: {onZero: false},
+        splitLine: {show: false},
+        splitNumber: 20,
+        min: 'dataMin',
+        max: 'dataMax'
+    },
+    yAxis: {
+        scale: true,
+        splitArea: {
+            show: true
+        }
+    },
+    dataZoom: [
+        {
+            type: 'inside',
+            start: 50,
+            end: 100
+        },
+        {
+            show: true,
+            type: 'slider',
+            top: '90%',
+            start: 50,
+            end: 100
+        }
+    ],
+    series: [
+        {
+            name: 'Chart',
+            type: 'candlestick',
+            data: data0.values,
+            itemStyle: {
+                color: 'black',
+                color0: 'black',
+                borderColor: upBorderColor,
+                borderColor0: downBorderColor
+            },
+            markPoint: {
+                label: {
+                    normal: {
+                        formatter: function (param) {
+                            return param != null ? param.value : '';
+                        }
+                    }
+                },
+                data: proffit,
+                tooltip: {
+                    formatter: function (param) {
+                        return param.name + '<br>' + (param.data.coord || '');
+                    }
+                }
+            }
+        },
+      
+
+    ]
+};
+
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
