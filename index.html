@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+     <title>Rentabilidade </title>
+       <meta charset="utf-8">
+	   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	   <meta http-equiv="Pragma" content="no-cache" />
+	   <meta http-equiv="Expires" content="0" />
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@1/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@1/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/extension/dataTool.min.js"></script>
+	   
+       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	   	   <script>var exports = {"__esModule": true};</script>
+	   <script src="https://cdn.jsdelivr.net/npm/@hendt/xml2json@1.0.3/lib/index.min.js"></script>
+
+
+
+       <script type="text/javascript">
+	   
+
+var GetData = function(url,result)
+{
+
+$.ajax({
+    url : url,
+    type : "get",
+    async: false,
+    success : function(data) {
+
+		result( xml2json(data));
+		
+    },
+    error: function() {
+    
+    }
+ });
+ 
+
+}
+
+var btc=null;
+var eth=null;
+var dates =null;
+
+
+
+GetData("https://backtest-result.vercel.app/LTCUSDT_ResultBacketest_H42__0_3_11.xls",
+
+	function(data){
+
+	 btc =data.DocumentElement.table;
+
+	
+	dates=	$(btc).map(function() {return this.DataOperacao;}).get();
+	
+	}
+
+);
+
+GetData("https://backtest-result.vercel.app/ETHUSDT_ResultBacketest_H42__0_3_8.xls",
+
+	function(data){
+
+	eth =data.DocumentElement.table;
+
+	}
+
+);
+
+
+
+	
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+	backgroundColor: '#21202D',
+	legend: {
+		data: ["BTC","ETH"],
+		inactiveColor: '#777',
+		textStyle: {
+		color: 'white'
+	}
+    },
+	tooltip: {
+	trigger: 'axis',
+		axisPointer: {
+		animation: false,
+		type: 'cross',
+		lineStyle: {
+		color: '#FFC000',
+		width: 1,
+		opacity: 1
+		}
+	}
+	},
+	
+    xAxis: {
+        type: 'category',
+		axisLine: { lineStyle: { color: '#8392A5' } },
+        data: dates
+    },
+    yAxis: {
+        type: 'value',
+		position: "right",
+		scale: true,
+		axisLine: { lineStyle: { color: '#8392A5' } },
+		splitLine: { show: false }
+    },
+	
+    dataZoom: [
+        {
+            type: 'slider',
+            xAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'slider',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            xAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        }
+    ],
+    series: [{
+	   name: 'BTC',
+	   lineStyle: {
+		normal: {
+			width: 2
+			}
+         },
+   			data:$(btc).map(function() {return Number(this.ProfitJurosComposto);}).get(),
+			type: 'line'
+		},
+		{
+	   name: 'ETH',
+	   lineStyle: {
+		normal: {
+			width: 2
+			}
+         },
+   			data:$(eth).map(function() {return Number(this.ProfitJurosComposto);}).get(),
+			type: 'line'
+		}
+	]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+
+
+
+       </script>
+   </body>
+</html>
