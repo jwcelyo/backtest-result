@@ -17284,16 +17284,48 @@
     <DataOperacao>15/09/2021 00:00</DataOperacao>
     <PredicaoIA>Short</PredicaoIA>
     <Candle>UP</Candle>
-    <Close>3494.56</Close>
+    <Close>3613.55</Close>
     <Open>3434.37</Open>
-    <High>3502.04</High>
+    <High>3616.16</High>
     <Low>3357.78</Low>
-    <CandleCorpoPct>1.72</CandleCorpoPct>
-    <CandlePavioSuperiorPct>0.21</CandlePavioSuperiorPct>
+    <CandleCorpoPct>3</CandleCorpoPct>
+    <CandlePavioSuperiorPct>0.07</CandlePavioSuperiorPct>
     <CandlePavioInferiorPct>2.23</CandlePavioInferiorPct>
     <Profit>Loss</Profit>
-    <ProfitPct>1.72</ProfitPct>
-    <ProfitAcumulado>263.92</ProfitAcumulado>
-    <ProfitJurosComposto>6614.51</ProfitJurosComposto>
+    <ProfitPct>3</ProfitPct>
+    <ProfitAcumulado>262.64</ProfitAcumulado>
+    <ProfitJurosComposto>6528.36</ProfitJurosComposto>
+  </table>
+  <table>
+    <DataOperacao>16/09/2021 00:00</DataOperacao>
+    <PredicaoIA>Short</PredicaoIA>
+    <Candle>DOWN</Candle>
+    <Close>3567.98</Close>
+    <Open>3613.55</Open>
+    <High>3676.28</High>
+    <Low>3481.14</Low>
+    <CandleCorpoPct>1.26</CandleCorpoPct>
+    <CandlePavioSuperiorPct>1.74</CandlePavioSuperiorPct>
+    <CandlePavioInferiorPct>2.43</CandlePavioInferiorPct>
+    <Profit>Gain</Profit>
+    <ProfitPct>1.26</ProfitPct>
+    <ProfitAcumulado>263.9</ProfitAcumulado>
+    <ProfitJurosComposto>6610.62</ProfitJurosComposto>
+  </table>
+  <table>
+    <DataOperacao>17/09/2021 00:00</DataOperacao>
+    <PredicaoIA>Long</PredicaoIA>
+    <Candle>DOWN</Candle>
+    <Close>3394.15</Close>
+    <Open>3567.97</Open>
+    <High>3594.17</High>
+    <Low>3360.06</Low>
+    <CandleCorpoPct>3</CandleCorpoPct>
+    <CandlePavioSuperiorPct>0.73</CandlePavioSuperiorPct>
+    <CandlePavioInferiorPct>1</CandlePavioInferiorPct>
+    <Profit>Loss</Profit>
+    <ProfitPct>3</ProfitPct>
+    <ProfitAcumulado>260.9</ProfitAcumulado>
+    <ProfitJurosComposto>6412.3</ProfitJurosComposto>
   </table>
 </DocumentElement>
