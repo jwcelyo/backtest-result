@@ -50,7 +50,7 @@ var dates =null;
 
 
 
-GetData("https://backtest-result.vercel.app/XRPUSDT_ResultBacketest_H42__0_3_8.xls",
+GetData("https://backtest-result.vercel.app/BTCUSDT_ResultBacketest_H42__0_3_8.xls",
 
 	function(data){
 
@@ -63,7 +63,7 @@ GetData("https://backtest-result.vercel.app/XRPUSDT_ResultBacketest_H42__0_3_8.x
 
 );
 
-GetData("https://backtest-result.vercel.app/ETHUSDT_ResultBacketest_D1__0_3_8.xlsx",
+GetData("https://backtest-result.vercel.app/ETHUSDT_ResultBacketest_D1__0_3_8.xls",
 
 	function(data){
 
@@ -83,7 +83,7 @@ option = null;
 option = {
 	backgroundColor: '#21202D',
 	legend: {
-		data: ["XRP","ETH"],
+		data: ["BTC","ETH"],
 		inactiveColor: '#777',
 		textStyle: {
 		color: 'white'
@@ -138,7 +138,7 @@ option = {
         }
     ],
     series: [{
-	   name: 'XRP',
+	   name: 'BTC',
 	   lineStyle: {
 		normal: {
 			width: 2
